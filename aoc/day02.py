@@ -11,5 +11,5 @@ def compute2(nums):
 
 if __name__ == '__main__':
     data = puzzle_input(__file__)
-    compute1(data)
-    compute2(data)
+    result1 = compute1(data)
+    result2 = compute2(data)
