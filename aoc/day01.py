@@ -18,10 +18,13 @@ def compute(nums, f, expected=None):
 
 
 if __name__ == '__main__':
+    test_data = multiline_input(__file__, tf=int, test=True)
     data = multiline_input(__file__, tf=int)
 
+    compute(test_data, compute1, 514579)
     result1 = compute(data, compute1, 138379)
     print(result1)
 
+    compute(test_data, compute2, 241861950)
     result2 = compute(data, compute2, 85491920)
     print(result2)
