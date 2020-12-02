@@ -1,3 +1,5 @@
+import re
+
 def delimited_input(filename, tf=id, delimiter=','):
     input_filename = f'input{filename[-5:-3]}.txt'
     file = open(input_filename)
@@ -6,6 +8,11 @@ def delimited_input(filename, tf=id, delimiter=','):
 
 def multiline_input(filename, tf=id):
     return delimited_input(filename, tf=tf, delimiter='\n')
+
+
+def regex_parse_input(filename, pattern):
+    p = re.compile(pattern)
+    return multiline_input(filename, lambda line: p.match(line).groups())
 
 
 def verify(expected, result):

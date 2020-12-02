@@ -1,7 +1,6 @@
 from collections import Counter
-import re
 
-from aoc.util import multiline_input, verify
+from aoc.util import regex_parse_input, verify
 
 
 def compute1(data, expected=None):
@@ -26,8 +25,7 @@ def validate2(first, second, char, pw):
 
 
 if __name__ == '__main__':
-    p = re.compile(r'(\d+)-(\d+) (\w): (\w+)')
-    data = multiline_input(__file__, lambda line: p.match(line).groups())
+    data = regex_parse_input(__file__, r'(\d+)-(\d+) (\w): (\w+)')
     result1 = compute1(data, 636)
     print(result1)
     result2 = compute2(data, 588)
