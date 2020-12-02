@@ -1,39 +1,34 @@
 from collections import Counter
+import re
 
-from aoc.util import multiline_input
-
-
-def compute1(data):
-    return len([d for d in data if validate(d[0], d[1])])
+from aoc.util import multiline_input, verify
 
 
-def validate(policy, password):
-    minmax, char = policy.split(' ')
-    minmaxl = minmax.split('-')
-    minc = int(minmaxl[0])
-    maxc = int(minmaxl[1])
-    pwc = Counter(password)
+def compute1(data, expected=None):
+    return verify(expected, len([d for d in data if validate(*d)]))
+
+
+def compute2(data, expected=None):
+    return verify(expected, len([d for d in data if validate2(*d)]))
+
+
+def validate(first, second, char, pw):
+    minc = int(first)
+    maxc = int(second)
+    pwc = Counter(pw)
     return minc <= pwc[char] <= maxc
 
 
-def validate2(policy, password):
-    onetwo, char = policy.split(' ')
-    onetwol = onetwo.split('-')
-    one = int(onetwol[0])
-    two = int(onetwol[1])
-    print(policy, password, password[one-1] == char and password[two-1] != char)
-    print(f'character {one} is {char} ({password[one-1]}), character {two} ({password[two-1]}) is twot')
-    return (password[one-1] == char and password[two-1] != char) or (password[one-1] != char and password[two-1] == char)
+def validate2(first, second, char, pw):
+    one = int(first)
+    two = int(second)
+    return (pw[one-1] == char and pw[two-1] != char) or (pw[one-1] != char and pw[two-1] == char)
 
 
-def compute2(nums):
-    return len([d for d in data if validate2(d[0], d[1])])
-
-
-# 3-8 v: knvrrqvtv
 if __name__ == '__main__':
-    data = multiline_input(__file__, lambda line: line.split(': '))
-    result1 = compute1(data)
+    p = re.compile(r'(\d+)-(\d+) (\w): (\w+)')
+    data = multiline_input(__file__, lambda line: p.match(line).groups())
+    result1 = compute1(data, 636)
     print(result1)
-    result2 = compute2(data)
+    result2 = compute2(data, 588)
     print(result2)
