@@ -25,8 +25,9 @@ def validate2(first, second, char, pw):
 
 
 if __name__ == '__main__':
-    test_data = regex_parse_input(__file__, r'(\d+)-(\d+) (\w): (\w+)', test=True)
-    data = regex_parse_input(__file__, r'(\d+)-(\d+) (\w): (\w+)')
+    pattern = r'(\d+)-(\d+) (\w): (\w+)'  
+    test_data = regex_parse_input(__file__, pattern, test=True)
+    data = regex_parse_input(__file__, pattern)
     compute1(test_data, 2)
     result1 = compute1(data, 636)
     print(result1)
