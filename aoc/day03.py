@@ -36,5 +36,5 @@ if __name__ == '__main__':
     result1 = compute1(data, 151)
     print(result1)
     compute2(test_data, 336)
-    result2 = compute2(data)
+    result2 = compute2(data, 7540141059)
     print(result2)
