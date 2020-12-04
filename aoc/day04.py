@@ -1,6 +1,7 @@
 import re
 
-from aoc.util import multiline_input, regex_parse_input, verify
+from aoc.util import multiline_input, verify
+
 
 def parse(raw_input):
     raw_passports = []
@@ -53,25 +54,22 @@ def valid2(doc):
             return start <= int(s) <= end
 
     def hgt_val(s):
-        if re.match(r'^\d+(in|cm)$', s):
-            num = int(s[:-2])
-            units = s[-2:]
-            if units == 'in':
-                return 59 <= num <= 76
-            elif units == 'cm':
-                return 150 <= num <= 193
+        match = re.match(r'^(\d+)(in|cm)$', s)
+        if match:
+            num, units = match.groups()
+            return 59 <= int(num) <= 76 if units == 'in' else 150 <= int(num) <= 193
 
     validations = {
         'byr': lambda s: year_val(s, 1920, 2002),
         'iyr': lambda s: year_val(s, 2010, 2020),
         'eyr': lambda s: year_val(s, 2020, 2030),
         'hgt': hgt_val,
-        'hcl': lambda s: True if re.match(r'^#[0-9a-f]{6}$', s) else False,
-        'ecl': lambda s: s in ['amb', 'blu', 'brn', 'gry', 'grn', 'hzl', 'oth'],
-        'pid': lambda s: True if re.match(r'^[0-9]{9}$', s) else False
+        'hcl': lambda s: re.match(r'^#[0-9a-f]{6}$', s),
+        'ecl': lambda s: re.match(r'^(amb|blu|brn|gry|grn|hzl|oth)$', s),
+        'pid': lambda s: re.match(r'^[0-9]{9}$', s)
     }
     for k in validations:
-        if not k in doc or not validations[k](doc[k]):
+        if k not in doc or not validations[k](doc[k]):
             return False
     return True
 
