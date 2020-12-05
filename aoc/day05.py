@@ -1,14 +1,13 @@
 from aoc.util import multiline_input, verify
 
 
+def from_binary(s, one):
+    return int(''.join(['1' if c == one else '0' for c in s]), 2)
+
+
 def locate(line):
-    row_info = line[:7]
-    row_b = ''.join(['1' if r == 'B' else '0' for r in row_info])
-    col_info = line[-3:]
-    col_b = ''.join(['1' if c == 'R' else '0' for c in col_info])
-    col = int(col_b, 2)
-    row = int(row_b, 2)
-    return row, col
+    row_info, col_info = line[:7], line[-3:]
+    return from_binary(row_info, 'B'), from_binary(col_info, 'R')
 
 
 def seat_id(row, col):
