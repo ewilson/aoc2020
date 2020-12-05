@@ -14,24 +14,30 @@ def seat_id(row, col):
     return 8*row + col
 
 
+def all_ids(lines):
+    return [seat_id(*locate(line)) for line in lines]
+
+
 def compute1(stuff, expected=None):
-    largest_id = max([seat_id(*locate(line)) for line in stuff])
+    largest_id = max(all_ids(stuff))
     return verify(expected, largest_id)
 
 
 def compute2(stuff, expected=None):
-    seats = sorted([seat_id(*locate(line)) for line in stuff])
-    previous = 0
+    seats = sorted(all_ids(stuff))
+    previous, your_seat = 0, None
     for s in seats:
         if s - previous == 2:
-            print(previous, s)
+            your_seat = s-1
         previous = s
+    return verify(expected, your_seat)
 
 
 if __name__ == '__main__':
     test_data = multiline_input(__file__, test=True)
     data = multiline_input(__file__)
     compute1(test_data, 820)
-    result1 = compute1(data)
+    result1 = compute1(data, 998)
     print(result1)
-    compute2(data)
+    result2 = compute2(data, 676)
+    print(result2)
