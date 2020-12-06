@@ -1,7 +1,7 @@
 from functools import reduce
 from operator import mul
 
-from aoc.util import multiline_input, verify
+from aoc.util import single_line_records, verify
 
 
 def compute1(nums):
@@ -18,8 +18,8 @@ def compute(nums, f, expected=None):
 
 
 if __name__ == '__main__':
-    test_data = multiline_input(__file__, tf=int, test=True)
-    data = multiline_input(__file__, tf=int)
+    test_data = single_line_records(__file__, tf=int, test=True)
+    data = single_line_records(__file__, tf=int)
 
     compute(test_data, compute1, 514579)
     result1 = compute(data, compute1, 138379)

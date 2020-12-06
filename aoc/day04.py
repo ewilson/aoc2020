@@ -1,29 +1,10 @@
 import re
 
-from aoc.util import multiline_input, verify
-
-
-def parse(raw_input):
-    raw_passports = []
-    current = []
-    for line in raw_input:
-        if line.strip() == '':
-            raw_passports.append(list(current))
-            current.clear()
-        else:
-            current.append(line)
-    if current:
-        raw_passports.append(current)
-    return raw_passports
+from aoc.util import multiple_line_records, verify
 
 
 def parse2(raw_passports):
-    key_vals = []
-    for rp in raw_passports:
-        key_val_list = []
-        for s in rp:
-            key_val_list.extend(s.split(' '))
-        key_vals.append(key_val_list)
+    key_vals = [rp.split(' ') for rp in raw_passports]
     return key_vals
 
 
@@ -74,28 +55,26 @@ def valid2(doc):
     return True
 
 
-def compute1(lines, expected=None):
-    raw_passports = parse(lines)
-    key_vals = parse2(raw_passports)
+def compute1(records, expected=None):
+    key_vals = parse2(records)
     docs = parse3(key_vals)
     valid_docs = [d for d in docs if valid(d)]
     return verify(expected, len(valid_docs))
 
 
-def compute2(lines, expected=None):
-    raw_passports = parse(lines)
-    key_vals = parse2(raw_passports)
+def compute2(records, expected=None):
+    key_vals = parse2(records)
     docs = parse3(key_vals)
     valid_docs = [d for d in docs if valid2(d)]
     return verify(expected, len(valid_docs))
 
 
 if __name__ == '__main__':
-    test_data = multiline_input(__file__, test=True)
-    data = multiline_input(__file__)
+    test_data = multiple_line_records(__file__, test=True)
+    data = multiple_line_records(__file__)
     # compute1(test_data, 2)
     result1 = compute1(data, 228)
     print(result1)
     compute2(test_data, 4)
-    result2 = compute2(data)
+    result2 = compute2(data, 175)
     print(result2)

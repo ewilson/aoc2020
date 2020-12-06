@@ -1,4 +1,4 @@
-from aoc.util import multiline_input, verify
+from aoc.util import single_line_records, verify
 
 
 def compute1(forest, expected=None):
@@ -30,8 +30,8 @@ def compute2(forest, expected=None):
 
 
 if __name__ == '__main__':
-    test_data = multiline_input(__file__, test=True)
-    data = multiline_input(__file__)
+    test_data = single_line_records(__file__, test=True)
+    data = single_line_records(__file__)
     compute1(test_data, 7)
     result1 = compute1(data, 151)
     print(result1)
