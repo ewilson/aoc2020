@@ -23,22 +23,13 @@ def build_graph(rules):
     return graph
 
 
-def find_parents(bag, graph):
-    parents = set()
+def find_ancestors(bag, graph):
+    ancestors = set()
     for parent, child in graph:
         if child == bag:
-            parents.add(parent)
-    return parents
-
-
-def find_ancestors(bag, graph):
-    ancestors = set([bag])
-    checked = set()
-    while ancestors - checked:
-        current = next(iter(ancestors - checked))
-        ancestors.update(find_parents(current, graph))
-        checked.add(current)
-    return ancestors - {bag}
+            ancestors.add(parent)
+            ancestors.update(find_ancestors(parent, graph))
+    return ancestors
 
 
 def count_descendants(bag, graph):
@@ -75,5 +66,5 @@ if __name__ == '__main__':
     result1 = compute1(data, 326)
     print(result1)
     compute2(test_data, 32)
-    result2 = compute2(data)
+    result2 = compute2(data, 5635)
     print(result2)
