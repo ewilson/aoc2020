@@ -2,10 +2,10 @@ from sys import argv
 
 day = argv[1]
 
-data_files = [f'day{day}.py', f'input{day}.txt', f'test{day}.txt']
+data_files = [f'input{day}.txt', f'test{day}.txt']
 
 for name in data_files:
-    open(name, 'w')
+    open(f'data/{name}', 'w')
 
 python_file = open(f'day{day}.py', 'w')
 python_file.writelines([

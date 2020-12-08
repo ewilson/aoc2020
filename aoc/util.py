@@ -3,7 +3,7 @@ import re
 
 def open_file(filename, test):
     file_prefix = 'test' if test else 'input'
-    input_filename = f'{file_prefix}{filename[-5:-3]}.txt'
+    input_filename = f'data/{file_prefix}{filename[-5:-3]}.txt'
     return open(input_filename)
 
 
@@ -37,6 +37,7 @@ def regex_parse_input(filename, pattern, test=False):
 
 
 def verify(expected, result):
+    print(result)
     if expected:
         assert result == expected
     return result
