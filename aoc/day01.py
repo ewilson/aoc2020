@@ -22,9 +22,7 @@ if __name__ == '__main__':
     data = single_line_records(__file__, tf=int)
 
     compute(test_data, compute1, 514579)
-    result1 = compute(data, compute1, 138379)
-    print(result1)
+    compute(data, compute1, 138379)
 
     compute(test_data, compute2, 241861950)
-    result2 = compute(data, compute2, 85491920)
-    print(result2)
+    compute(data, compute2, 85491920)

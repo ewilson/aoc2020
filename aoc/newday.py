@@ -25,9 +25,7 @@ python_file.writelines([
     '    test_data = regex_parse_input(__file__, pattern, test=True)\n',
     '    data = regex_parse_input(__file__, pattern)\n',
     '    compute1(test_data, 4)\n',
-    '    # result1 = compute1(data, 326)\n',
-    '    # print(result1)\n',
+    '    # compute1(data, 326)\n',
     '    # compute2(test_data, 32)\n',
-    '    # result2 = compute2(data, 5635)\n',
-    '    # print(result2)\n'
+    '    # compute2(data, 5635)\n',
 ])
