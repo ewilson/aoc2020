@@ -1,4 +1,4 @@
-from aoc.util import single_line_records, verify
+from aoc.util import single_line_records, test_solution
 
 
 def from_binary(s, one):
@@ -18,24 +18,23 @@ def all_ids(lines):
     return [seat_id(*locate(line)) for line in lines]
 
 
-def compute1(stuff, expected=None):
-    largest_id = max(all_ids(stuff))
-    return verify(expected, largest_id)
+def compute1(stuff):
+    return max(all_ids(stuff))
 
 
-def compute2(stuff, expected=None):
+def compute2(stuff):
     seats = sorted(all_ids(stuff))
     previous, your_seat = 0, None
     for s in seats:
         if s - previous == 2:
             your_seat = s-1
         previous = s
-    return verify(expected, your_seat)
+    return your_seat
 
 
 if __name__ == '__main__':
     test_data = single_line_records(__file__, test=True)
     data = single_line_records(__file__)
-    compute1(test_data, 820)
-    compute1(data, 998)
-    compute2(data, 676)
+    test_solution(compute1, test_data, 820)
+    test_solution(compute1, data, 998)
+    test_solution(compute2, data, 676)

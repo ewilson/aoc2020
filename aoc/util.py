@@ -1,25 +1,26 @@
 import re
+from typing import Callable
 
 
-def open_file(filename, test):
+def _open_file(filename, test):
     file_prefix = 'test' if test else 'input'
     input_filename = f'data/{file_prefix}{filename[-5:-3]}.txt'
     return open(input_filename)
 
 
-def delimited_input(filename, tf=id, delimiter=',', test=False):
-    file = open_file(filename, test)
+def _delimited_input(filename, tf=id, delimiter=',', test=False):
+    file = _open_file(filename, test)
     return [tf(item) for item in file.read().split(delimiter)]
 
 
-def single_line_records(filename, tf=lambda x: x, test=False):
-    return delimited_input(filename, tf=tf, delimiter='\n', test=test)
+def single_line_records(filename: str, tf=lambda x: x, test=False):
+    return _delimited_input(filename, tf=tf, delimiter='\n', test=test)
 
 
-def multiple_line_records(filename, test=False):
+def multiple_line_records(filename: str, test=False):
     records = []
     current_record = []
-    file = open_file(filename, test)
+    file = _open_file(filename, test)
     for line in file.readlines():
         if line.strip() == '':
             records.append(' '.join(current_record))
@@ -31,13 +32,23 @@ def multiple_line_records(filename, test=False):
     return records
 
 
-def regex_parse_input(filename, pattern, test=False):
+def regex_parse_input(filename: str, pattern: str, test=False):
     p = re.compile(pattern)
     return single_line_records(filename, tf=lambda line: p.match(line).groups(), test=test)
 
 
-def verify(expected, result):
+def test_solution(f: Callable, records: list, expected=None):
+    """
+    Applies function to records and tests against expected value.
+
+    Prints result, and throws assertion error if doesn't match expected
+
+    :param f: unary solution function, expects list
+    :param records: list, typically parsed into meaningful records
+    :param expected: optional expected value, for testing
+    :return: None
+    """
+    result = f(records)
     print(result)
     if expected:
-        assert result == expected
-    return result
+        assert result == expected, f'{expected, result}'

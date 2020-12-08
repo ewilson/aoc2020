@@ -1,4 +1,4 @@
-from aoc.util import regex_parse_input, verify
+from aoc.util import regex_parse_input, test_solution
 
 
 def bag_tuple(bi):
@@ -42,27 +42,26 @@ def count_descendants(bag, graph):
     return descendants
 
 
-def compute1(records, expected=None):
+def compute1(records):
     rule_dict = parse_rules(records)
     graph = build_graph(rule_dict)
     my_bag = 'shiny gold'
-    containing = find_ancestors(my_bag, graph)
-    return verify(expected, len(containing))
+    return len(find_ancestors(my_bag, graph))
 
 
-def compute2(records, expected=None):
+def compute2(records):
     rule_dict = parse_rules(records)
     graph = build_graph(rule_dict)
     my_bag = 'shiny gold'
-    contains = count_descendants(my_bag, graph)
-    return verify(expected, contains)
+    return count_descendants(my_bag, graph)
 
 
 if __name__ == '__main__':
     pattern = r'^(.+) bags contain (.+)\.$'
     test_data = regex_parse_input(__file__, pattern, test=True)
     data = regex_parse_input(__file__, pattern)
-    compute1(test_data, 4)
-    compute1(data, 326)
-    compute2(test_data, 32)
-    compute2(data, 5635)
+
+    test_solution(compute1, test_data, 4)
+    test_solution(compute1, data, 326)
+    test_solution(compute2, test_data, 32)
+    test_solution(compute2, data, 5635)

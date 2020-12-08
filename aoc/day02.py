@@ -1,14 +1,14 @@
 from collections import Counter
 
-from aoc.util import regex_parse_input, verify
+from aoc.util import regex_parse_input, test_solution
 
 
-def compute1(data, expected=None):
-    return verify(expected, len([d for d in data if validate(*d)]))
+def compute1(data):
+    return len([d for d in data if validate(*d)])
 
 
-def compute2(data, expected=None):
-    return verify(expected, len([d for d in data if validate2(*d)]))
+def compute2(data):
+    return len([d for d in data if validate2(*d)])
 
 
 def validate(first, second, char, pw):
@@ -28,7 +28,8 @@ if __name__ == '__main__':
     pattern = r'(\d+)-(\d+) (\w): (\w+)'  
     test_data = regex_parse_input(__file__, pattern, test=True)
     data = regex_parse_input(__file__, pattern)
-    compute1(test_data, 2)
-    compute1(data, 636)
-    compute2(test_data, 1)
-    compute2(data, 588)
+
+    test_solution(compute1, test_data, 2)
+    test_solution(compute1, data, 636)
+    test_solution(compute2, test_data, 1)
+    test_solution(compute2, data, 588)

@@ -1,6 +1,6 @@
 import re
 
-from aoc.util import multiple_line_records, verify
+from aoc.util import multiple_line_records, test_solution
 
 
 def parse2(raw_passports):
@@ -55,24 +55,23 @@ def valid2(doc):
     return True
 
 
-def compute1(records, expected=None):
+def compute1(records):
     key_vals = parse2(records)
     docs = parse3(key_vals)
-    valid_docs = [d for d in docs if valid(d)]
-    return verify(expected, len(valid_docs))
+    return len([d for d in docs if valid(d)])
 
 
-def compute2(records, expected=None):
+def compute2(records):
     key_vals = parse2(records)
     docs = parse3(key_vals)
-    valid_docs = [d for d in docs if valid2(d)]
-    return verify(expected, len(valid_docs))
+    return len([d for d in docs if valid2(d)])
 
 
 if __name__ == '__main__':
     test_data = multiple_line_records(__file__, test=True)
     data = multiple_line_records(__file__)
-    # compute1(test_data, 2)
-    compute1(data, 228)
-    compute2(test_data, 4)
-    compute2(data, 175)
+
+    # test_solution(compute1, test_data, 2)
+    test_solution(compute1, data, 228)
+    test_solution(compute2, test_data, 4)
+    test_solution(compute2, data, 175)

@@ -1,6 +1,6 @@
 from collections import Counter
 
-from aoc.util import multiple_line_records, verify
+from aoc.util import multiple_line_records, test_solution
 
 
 def answers(record):
@@ -12,20 +12,19 @@ def answers2(record):
     return set.intersection(*[set(a) for a in record.split()])
 
 
-def compute1(records, expected=None):
-    total = sum([len(answers(r)) for r in records])
-    return verify(expected, total)
+def compute1(records):
+    return sum([len(answers(r)) for r in records])
 
 
-def compute2(records, expected=None):
-    total = sum([len(answers2(r)) for r in records])
-    return verify(expected, total)
+def compute2(records):
+    return sum([len(answers2(r)) for r in records])
 
 
 if __name__ == '__main__':
     test_data = multiple_line_records(__file__, test=True)
     data = multiple_line_records(__file__)
-    compute1(test_data, 11)
-    compute1(data, 6680)
-    compute2(test_data, 6)
-    compute2(data, 3117)
+
+    test_solution(compute1, test_data, 11)
+    test_solution(compute1, data, 6680)
+    test_solution(compute2, test_data, 6)
+    test_solution(compute2, data, 3117)

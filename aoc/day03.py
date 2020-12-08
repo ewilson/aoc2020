@@ -1,7 +1,7 @@
-from aoc.util import single_line_records, verify
+from aoc.util import single_line_records, test_solution
 
 
-def compute1(forest, expected=None):
+def compute1(forest):
     x, y = 0, 0
     hits = 0
     width = len(forest[0])
@@ -9,10 +9,10 @@ def compute1(forest, expected=None):
         if row[x % width] == '#':
             hits += 1
         x += 3
-    return verify(expected, hits)
+    return hits
 
 
-def compute2(forest, expected=None):
+def compute2(forest):
     hit_prod = 1
     for slope in [(1, 1), (3, 1), (5, 1), (7, 1), (1, 2)]:
         across, down = slope
@@ -26,13 +26,14 @@ def compute2(forest, expected=None):
                 hits += 1
             x += across
         hit_prod *= hits
-    return verify(expected, hit_prod)
+    return hit_prod
 
 
 if __name__ == '__main__':
     test_data = single_line_records(__file__, test=True)
     data = single_line_records(__file__)
-    compute1(test_data, 7)
-    compute1(data, 151)
-    compute2(test_data, 336)
-    compute2(data, 7540141059)
+
+    test_solution(compute1, test_data, 7)
+    test_solution(compute1, data, 151)
+    test_solution(compute2, test_data, 336)
+    test_solution(compute2, data, 7540141059)
