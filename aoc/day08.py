@@ -2,18 +2,11 @@ from aoc.util import single_line_records, verify
 
 
 def execute(op, val):
-    if op == 'nop':
-        return 1, 0
-    if op == 'acc':
-        return 1, val
-    if op == 'jmp':
-        return val, 0
+    return val if op == 'jmp' else 1, val if op == 'acc' else 0
 
 
 def run_program(ops):
-    accumulator = 0
-    pointer = 0
-    executed = set()
+    accumulator, pointer, executed = 0, 0, set()
     while pointer not in executed and pointer < len(ops):
         executed.add(pointer)
         change_pointer, add = execute(*ops[pointer])
@@ -29,10 +22,7 @@ def compute1(ops, expected=None):
 
 
 def swap_op(op, val):
-    if op == 'jmp':
-        return 'nop', val
-    if op == 'nop':
-        return 'jmp', val
+    return ('nop', val) if op == 'jmp' else ('jmp', val)
 
 
 def compute2(ops, expected=None):
@@ -56,5 +46,5 @@ if __name__ == '__main__':
     result1 = compute1(data, 1394)
     print(result1)
     compute2(test_data, 8)
-    result2 = compute2(data)
+    result2 = compute2(data, 1626)
     print(result2)
