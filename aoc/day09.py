@@ -27,13 +27,11 @@ def find_contiguous(records, invalid):
     return records[start:end+1]
 
 
-def compute1(records):
-    preamble_length = 25
+def compute1(records, preamble_length):
     return find_invalid(records, preamble_length)
 
 
-def compute2(records):
-    preamble_length = 25
+def compute2(records, preamble_length):
     invalid = find_invalid(records, preamble_length)
     contiguous = find_contiguous(records, invalid)
     return min(contiguous) + max(contiguous)
@@ -44,7 +42,7 @@ if __name__ == '__main__':
     test_data = single_line_records(__file__, int, test=True)
     data = single_line_records(__file__, int)
 
-    # test_solution(compute1, test_data, 127)
-    test_solution(compute1, data, 1038347917)
-    # test_solution(compute2, test_data, 62)
-    test_solution(compute2, data, 137394018)
+    test_solution(compute1, test_data, 127, options=5)
+    test_solution(compute1, data, 1038347917, options=25)
+    test_solution(compute2, test_data, 62, options=5)
+    test_solution(compute2, data, 137394018, options=25)

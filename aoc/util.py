@@ -37,7 +37,7 @@ def regex_parse_input(filename: str, pattern: str, test=False):
     return single_line_records(filename, tf=lambda line: p.match(line).groups(), test=test)
 
 
-def test_solution(f: Callable, records: list, expected=None):
+def test_solution(f: Callable, records: list, expected=None, options=None):
     """
     Applies function to records and tests against expected value.
 
@@ -46,9 +46,10 @@ def test_solution(f: Callable, records: list, expected=None):
     :param f: unary solution function, expects list
     :param records: list, typically parsed into meaningful records
     :param expected: optional expected value, for testing
+    :param options: other values needed by the function, if necessary
     :return: None
     """
-    result = f(records)
+    result = f(records) if options is None else f(records, options)
     print(result)
     if expected:
         assert result == expected, f'{expected, result}'
