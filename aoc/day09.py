@@ -15,16 +15,16 @@ def find_invalid(records, preamble_length):
 
 def find_contiguous(records, invalid):
     start, end = 0, 1
-    while True:
-        segment = records[start:end+1]
-        total = sum(segment)
+    total = records[start]
+    while total != invalid:
+        total += records[end]
         if total < invalid:
             end += 1
         elif total > invalid:
             start += 1
             end = start + 1
-        else:
-            return segment
+            total = records[start]
+    return records[start:end+1]
 
 
 def compute1(records):
@@ -47,4 +47,4 @@ if __name__ == '__main__':
     # test_solution(compute1, test_data, 127)
     test_solution(compute1, data, 1038347917)
     # test_solution(compute2, test_data, 62)
-    test_solution(compute2, data)
+    test_solution(compute2, data, 137394018)
