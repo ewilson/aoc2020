@@ -5,11 +5,11 @@ from aoc.util import single_line_records, test_solution
 
 
 def segment_partition_count(segment):
-    """Segment should contain no 'double twos gaps' or 'three gaps'"""
+    """Segment should contain no 'three gaps'"""
     if len(segment) <= 2:
         return 1
     elif len(segment) == 3:
-        return 2
+        return 2 if segment[2] - segment[0] <= 3 else 1
     else:
         first, second, third, fourth = segment[0], segment[1], segment[2], segment[3]
         if fourth - first == 3:
@@ -25,8 +25,6 @@ def find_essential_segments(adapters):
         if idx == 0 or idx == len(full)-1:
             essential_points.append(idx)
         elif val - full[idx-1] == 3 or full[idx+1] - val == 3:
-            essential_points.append(idx)
-        elif val - full[idx-1] == 2 and full[idx+1] - val == 2:
             essential_points.append(idx)
     previous = None
     segments = []
