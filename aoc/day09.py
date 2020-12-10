@@ -38,7 +38,6 @@ def compute2(records, preamble_length):
 
 
 if __name__ == '__main__':
-    pattern = r''
     test_data = single_line_records(__file__, int, test=True)
     data = single_line_records(__file__, int)
 
