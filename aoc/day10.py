@@ -1,4 +1,40 @@
+from functools import reduce
+from operator import mul
+
 from aoc.util import single_line_records, test_solution
+
+
+def segment_partition_count(segment):
+    """Segment should contain no 'double twos gaps' or 'three gaps'"""
+    if len(segment) <= 2:
+        return 1
+    elif len(segment) == 3:
+        return 2
+    else:
+        first, second, third, fourth = segment[0], segment[1], segment[2], segment[3]
+        if fourth - first == 3:
+            return segment_partition_count(segment[1:]) + segment_partition_count(segment[2:]) + segment_partition_count(segment[3:])
+        else:
+            return segment_partition_count(segment[1:]) + segment_partition_count(segment[2:])
+
+
+def find_essential_segments(adapters):
+    full = [0] + sorted(adapters)
+    essential_points = []
+    for idx, val in enumerate(full):
+        if idx == 0 or idx == len(full)-1:
+            essential_points.append(idx)
+        elif val - full[idx-1] == 3 or full[idx+1] - val == 3:
+            essential_points.append(idx)
+        elif val - full[idx-1] == 2 and full[idx+1] - val == 2:
+            essential_points.append(idx)
+    previous = None
+    segments = []
+    for idx in essential_points:
+        if previous is not None:
+            segments.append(full[previous:idx+1])
+        previous = idx
+    return segments
 
 
 def compute1(records):
@@ -12,12 +48,12 @@ def compute1(records):
         elif adapter - previous == 3:
             threes += 1
         previous = adapter
-    print(f'threes: {threes}, size: {len(records)}')
     return ones * threes
 
 
 def compute2(records):
-    return None
+    essential_segments = find_essential_segments(records)
+    return reduce(mul, [segment_partition_count(s) for s in essential_segments], 1)
 
 
 if __name__ == '__main__':
@@ -28,6 +64,6 @@ if __name__ == '__main__':
     test_solution(compute1, test_data, 35)
     test_solution(compute1, test_data_b, 220)
     test_solution(compute1, data, 2244)
-    # test_solution(compute2, test_data, 8)
-    # test_solution(compute2, test_data_b, 19208)
-    # test_solution(compute2, data)
+    test_solution(compute2, test_data, 8)
+    test_solution(compute2, test_data_b, 19208)
+    test_solution(compute2, data, 3947645370368)
