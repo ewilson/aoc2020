@@ -69,9 +69,10 @@ def compute2(records):
 
 if __name__ == '__main__':
     test_data = multiple_line_records(__file__, test=True)
+    test_data_b = multiple_line_records(__file__, test=True, version='b')
     data = multiple_line_records(__file__)
 
-    # test_solution(compute1, test_data, 2)
+    test_solution(compute1, test_data, 2)
     test_solution(compute1, data, 228)
-    test_solution(compute2, test_data, 4)
+    test_solution(compute2, test_data_b, 4)
     test_solution(compute2, data, 175)
