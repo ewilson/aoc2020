@@ -1,4 +1,4 @@
-import re
+import re, time
 from typing import Callable
 
 
@@ -10,7 +10,7 @@ def _open_file(filename, test, version):
 
 def _delimited_input(filename, tf=id, delimiter=',', test=False, version=''):
     file = _open_file(filename, test, version)
-    return [tf(item) for item in file.read().split(delimiter)]
+    return [tf(item) for item in file.read().split(delimiter) if item]
 
 
 def single_line_records(filename: str, tf=lambda x: x, test=False, version=''):
@@ -49,7 +49,9 @@ def test_solution(f: Callable, records: list, expected=None, options=None):
     :param options: other values needed by the function, if necessary
     :return: None
     """
+    ts = time.time()
     result = f(records) if options is None else f(records, options)
-    print(result)
+    ts2 = time.time()
+    print(f'{result} -- {ts2-ts:.3}s')
     if expected:
         assert result == expected, f'{expected, result}'
