@@ -23,6 +23,11 @@ def combinations(n):
         return ['0' + n for n in previous] + ['1' + n for n in previous]
 
 
+def build_masked_loc(location, mask):
+    binary_loc = f'{int(location):036b}'
+    return ''.join([binary_loc[i] if mask[i] == '0' else mask[i] for i in range(36)])
+
+
 def compute2(instructions):
     mask = ''
     mem = {}
@@ -30,15 +35,12 @@ def compute2(instructions):
         if inst == 'mask':
             mask = val
         else:
-            location = inst[4:-1]
-            binary_loc = f'{int(location):036b}'
-            masked_loc = ''.join([binary_loc[i] if mask[i] == '0' else mask[i] for i in range(36)])
-            num_x = sum([1 for c in masked_loc if c == 'X'])
-            possibilities = combinations(num_x)
+            masked_loc = build_masked_loc(inst[4:-1], mask)
+            possibilities = combinations(masked_loc.count('X'))
             locations = []
             for p in possibilities:
-                vals = list(p)
-                locations.append(''.join([c if c != 'X' else vals.pop() for c in masked_loc]))
+                mask_values = list(p)
+                locations.append(''.join([c if c != 'X' else mask_values.pop() for c in masked_loc]))
             for loc in locations:
                 mem[int(loc, 2)] = int(val)
     return sum([mem[k] for k in mem])
