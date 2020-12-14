@@ -54,4 +54,4 @@ def test_solution(f: Callable, records: list, expected=None, options=None):
     ts2 = time.time()
     print(f'{result} -- {ts2-ts:.3}s')
     if expected:
-        assert result == expected, f'{expected, result}'
+        assert result == expected, f'Expected: {expected}, Actual: {result}'
