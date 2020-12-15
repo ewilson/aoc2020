@@ -70,7 +70,7 @@ def determine_final_state(layout, status):
         previous = layout
         layout = next_layout
         count += 1
-    return sum([1 for r in layout for s in r if s == '#'])
+    return len([r for r in layout for s in r if s == '#'])
 
 
 def compute1(layout):
