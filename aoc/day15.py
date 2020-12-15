@@ -21,20 +21,15 @@ def compute1(numbers, end_num):
     return new_number
 
 
-def compute2(records):
-    """Should make a more efficient approach, not bothering"""
-    return None
-
-
 if __name__ == '__main__':
-    test_data = [0,3,6]
-    test_data1 = [1,3,2]
-    test_data2 = [2,1,3]
-    test_data3 = [1,2,3]
-    test_data4 = [2,3,1]
-    test_data5 = [3,2,1]
-    test_data6 = [3,1,2]
-    data = [2,0,6,12,1,3]
+    test_data = [0, 3, 6]
+    test_data1 = [1, 3, 2]
+    test_data2 = [2, 1, 3]
+    test_data3 = [1, 2, 3]
+    test_data4 = [2, 3, 1]
+    test_data5 = [3, 2, 1]
+    test_data6 = [3, 1, 2]
+    data = [2, 0, 6, 12, 1, 3]
 
     test_solution(compute1, test_data, 436, options=2020)
     test_solution(compute1, test_data1, 1, options=2020)
