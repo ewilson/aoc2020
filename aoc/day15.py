@@ -1,24 +1,6 @@
 from aoc.util import test_solution
 
 
-def compute1(numbers, end_num):
-    last_time = {n: [idx+1] for idx, n in enumerate(numbers)}
-    start_turn = len(numbers) + 1
-    previous_number = numbers[-1]
-    for turn in range(start_turn, end_num + 1):
-        previous_number_record = last_time[previous_number]
-        if len(previous_number_record) == 1:
-            new_number = 0
-        else:
-            new_number = previous_number_record[-1] - previous_number_record[-2]
-        if new_number in last_time:
-            last_time[new_number].append(turn)
-        else:
-            last_time[new_number] = [turn]
-        previous_number = new_number
-    return new_number
-
-
 def compute2(numbers, end_num):
     last_time = {n: idx+1 for idx, n in enumerate(numbers)}
     start_turn = len(numbers) + 1
