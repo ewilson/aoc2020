@@ -1,20 +1,15 @@
 from aoc.util import single_line_records, test_solution
 
 
-def print_slice(world, xy_dim, z):
-    print(f'z = {z}')
+def print_slice(world, xy_dim, z, w=None):
+    if w is not None:
+        print(f'z = {z}, w = {w}')
+    else:
+        print(f'z = {z}')
     for x in range(xy_dim[0][0], xy_dim[0][1] + 1):
         for y in range(xy_dim[1][0], xy_dim[1][1] + 1):
-            print('#' if (x, y, z) in world else '.', end='')
-        print()
-    print()
-
-
-def print_slice2(world, xy_dim, z, w):
-    print(f'z = {z}, w = {w}')
-    for x in range(xy_dim[0][0], xy_dim[0][1] + 1):
-        for y in range(xy_dim[1][0], xy_dim[1][1] + 1):
-            print('#' if (x, y, z, w) in world else '.', end='')
+            cell = ((x, y, z) in world and w is None) or (x, y, z, w) in world
+            print('#' if cell else '.', end='')
         print()
     print()
 
@@ -30,7 +25,7 @@ def print_world2(world, dimensions):
     w_min, w_max = dimensions[3]
     for z in range(z_min, z_max + 1):
         for w in range(w_min, w_max + 1):
-            print_slice2(world, dimensions[0:2], z, w)
+            print_slice(world, dimensions[0:2], z, w)
 
 
 def build(init_config):
