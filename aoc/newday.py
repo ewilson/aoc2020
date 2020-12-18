@@ -1,6 +1,4 @@
-from sys import argv
-
-day = argv[1]
+day = input('Day?\n>>> ')
 
 data_files = [f'input{day}.txt', f'test{day}.txt']
 
