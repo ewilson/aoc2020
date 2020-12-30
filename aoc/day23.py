@@ -25,24 +25,27 @@ class Node:
             else:
                 return self.next_val.order(one_found=one_found)
 
+    def next_two(self):
+        return self.next_val.val * self.next_val.next_val.val
+
     def __repr__(self):
-        return f'{self.val} -> <{self.next_val.val}>'
+        return f'{self.val} {self.next_val.val} {self.next_val.next_val.val} {self.next_val.next_val.next_val.val} {self.next_val.next_val.next_val.next_val.val} {self.next_val.next_val.next_val.next_val.next_val.val} {self.next_val.next_val.next_val.next_val.next_val.next_val.val} {self.next_val.next_val.next_val.next_val.next_val.next_val.next_val.val}'
 
 
-def minus_one_circular(num):
-    return num - 1 if num > 1 else 9
+def minus_one_circular(num, max):
+    return num - 1 if num > 1 else max
 
 
-def turn(current_node):
+def turn(current_node, highest, lookup):
     next_node = current_node.next_val
     last_removed = current_node.next_val.next_val.next_val
     new_next = current_node.next_val.next_val.next_val.next_val
     current_node.next_val = new_next
     removed_vals = [next_node.val, next_node.next_val.val, next_node.next_val.next_val.val]
-    destination = minus_one_circular(current_node.val)
+    destination = minus_one_circular(current_node.val, highest)
     while destination in removed_vals:
-        destination = minus_one_circular(destination)
-    destination_node = current_node.find_node(destination)
+        destination = minus_one_circular(destination, highest)
+    destination_node = lookup[destination]
     old_destination_next = destination_node.next_val
     destination_node.next_val = next_node
     last_removed.next_val = old_destination_next
@@ -51,17 +54,28 @@ def turn(current_node):
 
 def compute1(cups, number_turns):
     nodes = [Node(c, None) for c in cups]
+    lookup = {n.val: n for n in nodes}
     for i in range(len(nodes)-1):
         nodes[i].next_val = nodes[i+1]
     nodes[len(nodes)-1].next_val = nodes[0]
     current = nodes[0]
     for _ in range(number_turns):
-        current = turn(current)
+        current = turn(current, len(nodes), lookup)
     return current.order()
 
 
-def compute2(records):
-    return None
+def compute2(cups, number_turns):
+    cups += [n for n in range(10, 1000001)]
+    nodes = [Node(c, None) for c in cups]
+    lookup = {n.val: n for n in nodes}
+    for i in range(len(nodes)-1):
+        nodes[i].next_val = nodes[i+1]
+    nodes[len(nodes)-1].next_val = nodes[0]
+    current = nodes[0]
+    for _ in range(number_turns):
+        current = turn(current, len(nodes), lookup)
+    one = lookup[1]
+    return one.next_two()
 
 
 if __name__ == '__main__':
@@ -70,6 +84,5 @@ if __name__ == '__main__':
 
     test_solution(compute1, test_data, '67384529', options=100)
     test_solution(compute1, data, '62934785', options=100)
-    # test_solution(compute1, data, 326)
-    # test_solution(compute2, test_data, 32)
-    # test_solution(compute2, data, 5635)
+    test_solution(compute2, test_data, 149245887792, options=10000000)
+    test_solution(compute2, data, 693659135400, options=10000000)
